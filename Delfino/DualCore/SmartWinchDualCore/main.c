@@ -100,6 +100,17 @@ void init_settings()
 
     modbus_holding_regs[Current_Waypoints_Pointer] = 0;
     modbus_holding_regs[Dwell_Time] = 1;
+    
+    //Defines motor coordinates
+    //5 input lengths required in metres as follows:
+    //Motor A to Motor B
+    //Motor C to Motor D
+    //Motor A to Motor D
+    //Motor A to Motor C
+    //Motor B to Motor D
+    //This fully charactises the layout and coordinates are set to allow for...
+    //any quadrilateral motor shape
+    set_motor_coord(1.0f,1.0f,1.0f,1.4142f,1.4142f);
 }
 
 void blinking_led()
