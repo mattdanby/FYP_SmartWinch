@@ -20,11 +20,22 @@ void waypoint_follower()
         modbus_holding_regs[Target_Y] = waypoints(modbus_holding_regs[Current_Waypoints_Pointer], 1);
         modbus_holding_regs[Target_Z] = waypoints(modbus_holding_regs[Current_Waypoints_Pointer], 2);
 
-        //update target length
-        target_cable_lengths = XYZ_to_length4(  (float) modbus_holding_regs[Target_X], 
-                                                (float) modbus_holding_regs[Target_Y], 
-                                                (float) modbus_holding_regs[Target_Z], 
-                                                (float) modbus_holding_regs[Field_Length]);
+        //update target lengths
++        //Finds current coordinates and from that, relative uplift
++        cur_target_point = tenandsag2coord( (float) modbus_holding_regs[Current_Force_Winch0]*0.0098066500286389f,
++                                            (float) modbus_holding_regs[Current_Force_Winch1]*0.0098066500286389f,
++                                            (float) modbus_holding_regs[Current_Force_Winch2]*0.0098066500286389f,
++                                            (float) modbus_holding_regs[Current_Force_Winch3]*0.0098066500286389f,
++                                            (float) modbus_holding_regs[Current_Length_Winch0]/1000.0f,
++                                            (float) modbus_holding_regs[Current_Length_Winch1]/1000.0f,
++                                            (float) modbus_holding_regs[Current_Length_Winch2]/1000.0f,
++                                            (float) modbus_holding_regs[Current_Length_Winch3]/1000.0f);
++        
++        //Uses calculated uplift to find tether lengths for target coordinate
++        target_cable_lengths = coord2ten_sag((float) modbus_holding_regs[Target_X],
++                                             (float) modbus_holding_regs[Target_Y],
++                                             (float) modbus_holding_regs[Target_Z],
++                                             (float) cur_target_point.uplift);
 
         modbus_holding_regs[Target_Length_Winch0] = target_cable_lengths.lengtha;
         modbus_holding_regs[Target_Length_Winch1] = target_cable_lengths.lengthb;
