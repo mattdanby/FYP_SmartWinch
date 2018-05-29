@@ -55,6 +55,38 @@ int max_val4_loc(float a, float b, float c, float d) {
     return max_val;
 }
 
+struct XYZ_coord_struct length4_to_XYZ(float c1, float c2, float c3,float c4) {
+	//a,b and c are the cable lengths respectively
+	//Cable d is neglected is this model as assumes no sag at all
+	//Distance is the gap between the motors assuming they are...
+	//at the same vertical height
+	
+	//Rotation of the field is used to simplify maths
+	//Field is rotated so that location C becomes the longest cable
+	//int remove_cable = ((max_val4_loc(c1,c2,c3,c4)+2)%4);
+    //float array1 [] = {c1,c2,c3,c4};
+	//float a = array1[(remove_cable)];
+	//float b = array1[((remove_cable+1)%4)];
+	//float d = array1[((remove_cable+3))%4];
+	float a = c1;
+	float b = c2;
+	float d = c4;
+	
+	//Performs operation
+	float ab;
+	struct XYZ_coord_struct coords;
+	coords.X = (pow((motdx-motax),2)+pow(a,2)-pow(d,2))/(2*(motdx-motax));
+	ab = sqrt(pow((motay-motby),2)+pow((motax-motbx),2));
+	coords.Y = (pow(ab,2)+pow(a,2)-pow(b,2))/(2*ab);
+	coords.Z = sqrt(pow(a,2)-pow((coords.X-motax),2)-pow((coords.Y-motay),2));
+	
+	//Rotates field back to original position
+	//coords = rotate_about_center(coords.X, coords.Y, coords.Z, distance, remove_cable);
+	return coords;
+	
+	
+}
+
 XYZ_coord_struct rotate_about_center(float x, float y, float z, float distance, int rotate) {
     //Sets center of the field to origin instead of motor A
     //Rotate clockwise 90 degrees the number of times specified
