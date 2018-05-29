@@ -114,7 +114,15 @@ void check_current_coordinate()
         modbusRTU_written_register_flags[Current_Length_Winch1] = 0;
         modbusRTU_written_register_flags[Current_Length_Winch2] = 0;
         modbusRTU_written_register_flags[Current_Length_Winch3] = 0;
-
+        
+        if(dip_switch.BIT7) //used to test matt's maths
++        {
++            //Pythagorean maths
++        actual_point = length4_to_XYZ( modbus_holding_regs[Current_Length_Winch0],
+                                        modbus_holding_regs[Current_Length_Winch1],
+                                        modbus_holding_regs[Current_Length_Winch2],
+                                        modbus_holding_regs[Current_Length_Winch3]);
++        } else {
         //calculate current point based on cable length
         //future: use tension compensated estimation
         actual_point = tenandsag2coord( (float) modbus_holding_regs[Current_Force_Winch0]*0.0098066500286389f,
@@ -125,7 +133,7 @@ void check_current_coordinate()
                                         modbus_holding_regs[Current_Length_Winch1],
                                         modbus_holding_regs[Current_Length_Winch2],
                                         modbus_holding_regs[Current_Length_Winch3]);
-
+        }
         modbus_holding_regs[Current_X] =  (signed int) actual_point.X;
         modbus_holding_regs[Current_Y] =  (signed int) actual_point.Y;
         modbus_holding_regs[Current_Z] =  (signed int) actual_point.Z;    
@@ -218,6 +226,14 @@ void manual_control()
         modbusRTU_written_register_flags[Target_Y_Offset] = 0;
         modbusRTU_written_register_flags[Target_Z_Offset] = 0;
 
+        
+        if(dip_switch.BIT7) //used to test matt's maths
++        {
++            //Pythagorean maths
++        target_cable_lengths = XYZ_to_length4(  modbus_holding_regs[Current_X],
++                +                               modbus_holding_regs[Current_Y], 
++                +                               modbus_holding_regs[Current_Z]);
++        } else {
         //update target lengths
         //Finds current coordinates and from that, relative uplift
         cur_target_point = tenandsag2coord( (float) modbus_holding_regs[Current_Force_Winch0]*0.0098066500286389f,
@@ -234,7 +250,7 @@ void manual_control()
                                              modbus_holding_regs[Target_Y],
                                              modbus_holding_regs[Target_Z],
                                              cur_target_point.uplift);
-
+        }
 
         modbus_holding_regs[Target_Length_Winch0] = target_cable_lengths.lengtha;
         modbus_holding_regs[Target_Length_Winch1] = target_cable_lengths.lengthb;
