@@ -110,7 +110,7 @@ void init_settings()
     //Motor B to Motor D
     //This fully charactises the layout and coordinates are set to allow for...
     //any quadrilateral motor shape
-    set_motor_coord(1.0f,1.0f,1.0f,1.4142f,1.4142f);
+    set_motor_coord(len_ab,len_cd,len_ad,len_ac,len_bd);
 }
 
 void blinking_led()
