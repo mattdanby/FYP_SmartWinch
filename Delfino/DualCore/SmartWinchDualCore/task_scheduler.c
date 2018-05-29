@@ -190,10 +190,10 @@ void manual_control()
         modbus_holding_regs[Target_Length_Winch0 + modbus_holding_regs[Winch_ID]] = modbus_holding_regs[Target_Setpoint]; 
 
         //to do: use tension compensated function        
-        target_point = length4_to_XYZ(  (float) modbus_holding_regs[Target_Length_Winch0]/1000.0f,
-                                        (float) modbus_holding_regs[Target_Length_Winch0]/1000.0f,
-                                        (float) modbus_holding_regs[Target_Length_Winch0]/1000.0f,
-                                        (float) modbus_holding_regs[Target_Length_Winch0]/1000.0f);
+        target_point = length4_to_XYZ(  (float) modbus_holding_regs[Target_Length_Winch0],
+                                        (float) modbus_holding_regs[Target_Length_Winch0],
+                                        (float) modbus_holding_regs[Target_Length_Winch0],
+                                        (float) modbus_holding_regs[Target_Length_Winch0]);
 
         modbus_holding_regs[Target_X] =  (signed int) target_point.X;
         modbus_holding_regs[Target_Y] =  (signed int) target_point.Y;
