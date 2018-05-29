@@ -76,7 +76,8 @@ int min_val4_loc(float a, float b, float c, float d) {
     //from the four locations (0 through to 3)
     float sel[] = {a, b, c, d};
     int min_val = 0;
-    for (int i=1;i<4;i++) {
+    int i;
+    for (i=1;i<4;i++) {
         if (sel[i]<sel[min_val]) 
         min_val = i;
         
@@ -97,7 +98,8 @@ int max_val4_loc(float a, float b, float c, float d) {
     //from the four locations (0 through to 3)
     float sel[] = {a, b, c, d};
     int max_val = 0;
-    for (int i=1;i<4;i++) {
+    int i;
+    for (i=1;i<4;i++) {
         if (sel[i]>sel[max_val]) 
         max_val = i;
         
@@ -110,7 +112,8 @@ float max_val4(float a, float b, float c, float d) {
     //from the four locations (0 through to 3)
     float sel[] = {a, b, c, d};
     int max_val = 0;
-    for (int i=1;i<4;i++) {
+    int i;
+    for (i=1;i<4;i++) {
         if (sel[i]>sel[max_val]) 
         max_val = i;
         
@@ -133,7 +136,8 @@ float min_max_diff(float g, float h, float i, float j) {
     float min = 1000000;
     float max = 0;
     float arraytest [] = {g,h,i,j};
-    for (int m = 0;m<4;m++) {
+    int m;
+    for (m = 0;m<4;m++) {
         if (min>arraytest[m]) {
             min = arraytest[m];
         }
