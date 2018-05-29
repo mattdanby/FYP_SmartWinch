@@ -26,16 +26,16 @@ void waypoint_follower()
 +                                            (float) modbus_holding_regs[Current_Force_Winch1]*0.0098066500286389f,
 +                                            (float) modbus_holding_regs[Current_Force_Winch2]*0.0098066500286389f,
 +                                            (float) modbus_holding_regs[Current_Force_Winch3]*0.0098066500286389f,
-+                                            (float) modbus_holding_regs[Current_Length_Winch0]/1000.0f,
-+                                            (float) modbus_holding_regs[Current_Length_Winch1]/1000.0f,
-+                                            (float) modbus_holding_regs[Current_Length_Winch2]/1000.0f,
-+                                            (float) modbus_holding_regs[Current_Length_Winch3]/1000.0f);
++                                            modbus_holding_regs[Current_Length_Winch0],
++                                            modbus_holding_regs[Current_Length_Winch1],
++                                            modbus_holding_regs[Current_Length_Winch2],
++                                            modbus_holding_regs[Current_Length_Winch3]);
 +        
 +        //Uses calculated uplift to find tether lengths for target coordinate
-+        target_cable_lengths = coord2ten_sag((float) modbus_holding_regs[Target_X],
-+                                             (float) modbus_holding_regs[Target_Y],
-+                                             (float) modbus_holding_regs[Target_Z],
-+                                             (float) cur_target_point.uplift);
++        target_cable_lengths = coord2ten_sag(modbus_holding_regs[Target_X],
++                                             modbus_holding_regs[Target_Y],
++                                             modbus_holding_regs[Target_Z],
++                                             cur_target_point.uplift);
 
         modbus_holding_regs[Target_Length_Winch0] = target_cable_lengths.lengtha;
         modbus_holding_regs[Target_Length_Winch1] = target_cable_lengths.lengthb;
