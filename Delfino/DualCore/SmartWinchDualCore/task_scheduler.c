@@ -35,8 +35,7 @@ void homing_routine() //with mcp266 apis
 
         homed_cable_lengths = XYZ_to_length4(  	(float) modbus_holding_regs[Current_X],
                                                 (float) modbus_holding_regs[Current_Y], 
-                                                (float) modbus_holding_regs[Current_Z], 
-                                                (float) modbus_holding_regs[Field_Length]);
+                                                (float) modbus_holding_regs[Current_Z]);
 
         modbus_holding_regs[Target_Length_Winch0] = (int) homed_cable_lengths.lengtha;
         modbus_holding_regs[Target_Length_Winch1] = (int) homed_cable_lengths.lengthb;
@@ -191,14 +190,10 @@ void manual_control()
         modbus_holding_regs[Target_Length_Winch0 + modbus_holding_regs[Winch_ID]] = modbus_holding_regs[Target_Setpoint]; 
 
         //to do: use tension compensated function        
-        target_point = tenandsag2coord( (float) modbus_holding_regs[Current_Force_Winch0]*0.0098066500286389f,
-                                        (float) modbus_holding_regs[Current_Force_Winch1]*0.0098066500286389f,
-                                        (float) modbus_holding_regs[Current_Force_Winch2]*0.0098066500286389f,
-                                        (float) modbus_holding_regs[Current_Force_Winch3]*0.0098066500286389f,
-                                        (float) modbus_holding_regs[Current_Length_Winch0]/1000.0f,
-                                        (float) modbus_holding_regs[Current_Length_Winch1]/1000.0f,
-                                        (float) modbus_holding_regs[Current_Length_Winch2]/1000.0f,
-                                        (float) modbus_holding_regs[Current_Length_Winch3]/1000.0f);
+        target_point = length4_to_XYZ(  (float) modbus_holding_regs[Target_Length_Winch0]/1000.0f,
+                                        (float) modbus_holding_regs[Target_Length_Winch0]/1000.0f,
+                                        (float) modbus_holding_regs[Target_Length_Winch0]/1000.0f,
+                                        (float) modbus_holding_regs[Target_Length_Winch0]/1000.0f);
 
         modbus_holding_regs[Target_X] =  (signed int) target_point.X;
         modbus_holding_regs[Target_Y] =  (signed int) target_point.Y;
