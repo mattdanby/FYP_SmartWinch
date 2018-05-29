@@ -19,6 +19,14 @@ void waypoint_follower()
         modbus_holding_regs[Target_X] = waypoints(modbus_holding_regs[Current_Waypoints_Pointer], 0);
         modbus_holding_regs[Target_Y] = waypoints(modbus_holding_regs[Current_Waypoints_Pointer], 1);
         modbus_holding_regs[Target_Z] = waypoints(modbus_holding_regs[Current_Waypoints_Pointer], 2);
+        
+        if(dip_switch.BIT7) //used to test matt's maths
+        {
+            //Pythagorean maths
+        target_cable_lengths = XYZ_to_length4(  modbus_holding_regs[Current_X],
+                +                               modbus_holding_regs[Current_Y], 
+                +                               modbus_holding_regs[Current_Z]);
+        } else {
 
         //update target lengths
 +        //Finds current coordinates and from that, relative uplift
@@ -36,6 +44,7 @@ void waypoint_follower()
 +                                             modbus_holding_regs[Target_Y],
 +                                             modbus_holding_regs[Target_Z],
 +                                             cur_target_point.uplift);
+        }
 
         modbus_holding_regs[Target_Length_Winch0] = target_cable_lengths.lengtha;
         modbus_holding_regs[Target_Length_Winch1] = target_cable_lengths.lengthb;
