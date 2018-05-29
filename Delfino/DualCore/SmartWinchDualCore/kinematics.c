@@ -13,9 +13,6 @@
 //Coordinates of the 3 motors B,C and D. A is assumed as the origin  to begin
 //with then the origin is shifted to ensure no negative Coordinates
 //Setup assumes flat ground
-int motaxmm, motaymm, motbxmm, motbymm ,motcxmm, motcymm ,motdxmm, motdymm;
-
-
 struct hv_tension_struct {
     float h_ten,v_ten;
 };
@@ -188,7 +185,7 @@ float ten2hten(float run_l,float h, float ten) {
     int n = 0;
     float ten_dif;
     float ten_dif2;
-    
+    float w = ((float) wmm)/1000;
     //Begins iterative solve
     do {
         tension_it = (ten_min+ten_max)/2;
@@ -221,7 +218,7 @@ struct XYZ_coord_struct tenandsag2coord(float tena,float tenb,float tenc,float t
     int m,n,maxplace;
     m = 1;
     tot = 100;
-    
+    float w = ((float) wmm)/1000;
 	//Converts to metres
 	slena = ((float) slenain)/1000;
 	slenb = ((float) slenbin)/1000;
@@ -380,7 +377,7 @@ struct hv_tension_struct angle2tensions(float run_l,float h, float angle) {
     float ten_max = 10000;
     float tension_it, mid_it, theta_it, theta_it_d;
     int n = 0;
-    
+    float w = ((float) wmm)/1000;
     //Converts angle to 1dp for comparison
     angle = angle*10.0f;
     angle = (angle > (floor(angle)+0.5f)) ? ceil(angle) : floor(angle);
@@ -406,7 +403,7 @@ struct hv_tension_struct angle2tensions(float run_l,float h, float angle) {
         n++;
         
         //Continues until desired accuracy reached
-    } while(theta_it_d!=angle);
+    } while(theta_it_d!=angle && n<1000);
     //printf("%f",theta_it);
     ten_ans.h_ten = tension_it;
     //Tension from top
@@ -421,7 +418,7 @@ struct length4_struct coord2ten_sag(int xmm, int ymm, int zmm,float comb_uplift)
 	float x = ((float) xmm)/1000;
 	float y = ((float) ymm)/1000;
 	float z = ((float) zmm)/1000;
-	
+	float w = ((float) wmm)/1000;
 	float motax = ((float) motaxmm)/1000;
 	float motbx = ((float) motbxmm)/1000;
 	float motcx = ((float) motcxmm)/1000;
