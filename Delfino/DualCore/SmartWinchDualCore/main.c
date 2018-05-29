@@ -185,7 +185,8 @@ void main(void)
 
         task_scheduler_handler(); // main program    
 
-        if(dip_switch.BIT7) //used to test matt's maths
+        //Taken out as implemented in the other functions
+        if(0) //used to test matt's maths
         {
             GPIO_writePin(DEVICE_GPIO_PIN_LED1, 1); //tic
             //Tensions x4, Sagged Lengths x4, Distance
