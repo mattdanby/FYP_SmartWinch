@@ -459,23 +459,24 @@ struct length4_struct coord2ten_sag(int xmm, int ymm, int zmm,float comb_uplift)
 	float mab = (motby-motay)/(motbx-motax);
 	float mbc = (motcy-motby)/(motcx-motbx);
 	float mcd = (motcy-motdy)/(motcx-motdx);
-	float cab = motay/(mab*motax);
-	float cbc = motby/(mbc*motbx);
-	float ccd = motcy/(mcd*motcx);
-	
-	
+	float cab = motay-(mab*motax);
+	float cbc = motby-(mbc*motbx);
+	float ccd = motcy-(mcd*motcx);
+
+
 	float lineab = ((y-cab)/mab);
 	float linebc = (mbc*x+cbc);
 	float linecd = ((y-ccd)/mcd);
-	
-	if (((motby-motay)==0) || ((motbx-motax)==0)) {
-	    lineab = motax;
+
+
+	if (((motby-motay)==0)) {
+		lineab = motaxmm;
 	}
 	if (((motcy-motby)==0)) {
-	    linebc = motby;
+		linebc = motby;
 	}
 	if (((motcx-motdx)==0)) {
-	    linecd = motcx;
+		linecd = motcx;
 	}
 	
 	if (x<=lineab || y>=linebc || x>=linecd || z<=0) {
