@@ -658,7 +658,9 @@ struct length4_struct coord2ten_sag(int xmm, int ymm, int zmm,float comb_uplift)
     //printf("\nTension D: ");
     //printf("%.2f",ten_final.tend);
     
-    
+    if (slena<=0 || slenb<=0 || slenc<=0 || slend<=0) {
+        len_final.valid_flag = 0;
+    }
     
 	return len_final;
 }
